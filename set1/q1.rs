@@ -7,13 +7,11 @@ fn hex_to_base64(hex_string: String) -> String {
 
     // convert hex string into byte vector 
     // https://doc.rust-lang.org/std/string/struct.String.html#method.into_bytes
+    // I liked jakerr's implementation of hex_to_char, char_to_hex -- solved for
+    // formatting cleverly by adding, subtracting '0', 'a' as u8
     let bytes = hex_string.into_bytes();
 
     /* 2. convert bytes into base64 */
-
-    // get our vector of bytes as bits now
-    // https://doc.rust-lang.org/1.2.0/std/collections/struct.BitVec.html#method.from_bytes
-    let mut bv = BitVec::from_bytes(&bytes);
 
     // create the output ahead of time, will be building it throughout
     let mut result = Vec::new();
@@ -37,13 +35,13 @@ fn hex_to_base64(hex_string: String) -> String {
     ];
 
     // add extra zeros to pad
-    let padding_amt = 24 - bv.len() % 24;  // or 3?
+    let padding_amt = 3 - bytes.len() % 3;  
     for _ in range(padding_amt) {
-        bv.push(0)
+        bytes.push(0 as u8);
     }
 
-    // iterating through the entire bit vector
-    for sixbit_pos in range_step(0, bv.len(), 24) {
+    // iterating through the entire byte vector
+    for sixbit_pos in range_step(0, bytes.len(), 3) {
         for _ in range(0, 4) {
             let mut sixbits : u32;
             mut = 
@@ -53,7 +51,7 @@ fn hex_to_base64(hex_string: String) -> String {
 
 
     // 3. output base64 -> string
-    print!("", &result);
+    print!("{}", &result);
 
     result
 }
@@ -61,7 +59,11 @@ fn hex_to_base64(hex_string: String) -> String {
 fn main(hex_string: String, base64_string: String) {
 
     is_correct = assert_eq!(hex_to_base_64(hex_string), base64_string);
-    if is_correct { print!("It works! Succesfully ...") } else { print!("Oops! Not quite there yet – think through it ...") };
+    if is_correct { 
+        print!("It works! Succesfully ...")
+    } else { 
+        print!("Oops! Not quite there yet – think through it ...")
+    };
 
 }
 
