@@ -21,6 +21,7 @@ fn hex_to_base64(hex_string: String) -> String {
     // This is faster, more quickly accessed: https://stackoverflow.com/a/19061862 
     // Using a match statement with a _ => fail! statement likely more secure / 
     // cleaner code, see https://github.com/garrettr/cryptopals/blob/master/1-1-base64.rs 
+    // above has some beautiful bit manipulation, really great
     const BASE_64: [char; 64] = [
         'A','B','C','D','E','F','G','H',
         'I','J','K','L','M','N','O','P',
@@ -36,20 +37,9 @@ fn hex_to_base64(hex_string: String) -> String {
     // beyond byte compatibility? looks like it needs to be in blocks of 24 bits
     // which helps a lot to know ...
 
-    // add extra zeros to pad last char
-    let padding_amt = 3 - bytes.len() % 3;  
-    for _ in range(padding_amt) {
-        bytes.push('0' as u8); // not sure if needs to be '0' or 0
-    }
+    // TODO: padding to have blocks of 24 bits
 
-    // iterating through the entire byte vector, converting to base64
-    for sixbit_pos in range_step(0, bytes.len(), 3) {
-        for _ in range(0, 4) {
-            let mut sixbits : u32;
-            mut = 
-            result.push(BASE_64[ sixbits ])
-        }
-    }
+    // TODO: putting from bytes to ascii via the table
 
 
     // 3. output base64 -> string
