@@ -37,7 +37,7 @@ fn hex_to_base64(hex_string: String) -> String {
     // add extra zeros to pad
     let padding_amt = 3 - bytes.len() % 3;  
     for _ in range(padding_amt) {
-        bytes.push(0 as u8);
+        bytes.push('0' as u8); // not sure if needs to be '0' or 0
     }
 
     // iterating through the entire byte vector
