@@ -7,8 +7,6 @@ fn hex_to_base64(hex_string: String) -> String {
 
     // convert hex string into byte vector 
     // https://doc.rust-lang.org/std/string/struct.String.html#method.into_bytes
-    // I liked jakerr's implementation of hex_to_char, char_to_hex -- solved for
-    // formatting cleverly by adding, subtracting '0', 'a' as u8
     let bytes = hex_string.into_bytes();
 
     /* 2. convert bytes into base64 */
@@ -34,13 +32,17 @@ fn hex_to_base64(hex_string: String) -> String {
         '4','5','6','7','8','9','+','/'
     ];
 
-    // add extra zeros to pad
+    //not at all clear to me why base64 needs to exist in blocks of 24 bits,
+    // beyond byte compatibility? looks like it needs to be in blocks of 24 bits
+    // which helps a lot to know ...
+
+    // add extra zeros to pad last char
     let padding_amt = 3 - bytes.len() % 3;  
     for _ in range(padding_amt) {
         bytes.push('0' as u8); // not sure if needs to be '0' or 0
     }
 
-    // iterating through the entire byte vector
+    // iterating through the entire byte vector, converting to base64
     for sixbit_pos in range_step(0, bytes.len(), 3) {
         for _ in range(0, 4) {
             let mut sixbits : u32;
@@ -72,6 +74,7 @@ fn main(hex_string: String, base64_string: String) {
 // the answer above it gives a decent walk through of actually doing the conversion by hand
 // which is worthwhile
 
+// brilliant, in ruby https://medium.com/@christ.blais/whats-the-deal-with-base64-c93263b92dd6
 
 // note to self: note the pattern from https://github.com/jakerr/cryptopals-rust/blob/master/src/conversions.rs 
 // - a loop, and within it, a tuple of .next() iterator objects to collect values and 
