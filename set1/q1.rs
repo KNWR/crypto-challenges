@@ -1,18 +1,18 @@
 // use std::io;
 // use std::iter::Iterator;
-use std::collections::BitVec;
+// use std::collections::BitVec;
 
 fn hex_to_base64(hex_string: String) -> String {
     /* 1. convert string into hex, represented as bytes */
 
     // convert hex string into byte vector 
     // https://doc.rust-lang.org/std/string/struct.String.html#method.into_bytes
-    let bytes = hex_string.into_bytes();
+    let _bytes = hex_string.clone().into_bytes();
 
     /* 2. convert bytes into base64 */
 
     // create the output ahead of time, will be building it throughout
-    let mut result = Vec::new();
+    let result = Vec::new();
 
     // each base64 char is 6 bits, each hex char is 4 bits
     // for every 6 bytes, we have four 6 bit base64 characters (LCM(6,4) == 24) 
@@ -43,20 +43,20 @@ fn hex_to_base64(hex_string: String) -> String {
 
 
     // 3. output base64 -> string
-    print!("{}", &result);
+    print!("{} converts? to {}", &hex_string, String::from_utf8(result.clone()).unwrap());
 
-    result
+    String::from_utf8(result).unwrap()
 }
 
-fn main(hex_string: String, base64_string: String) {
+fn main() {
+    let hex_string : String = String::from("49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d");
+    let base64_string : String = String::from("SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t");
 
-    is_correct = assert_eq!(hex_to_base_64(hex_string), base64_string);
-    if is_correct { 
-        print!("It works! Succesfully ...")
+    if hex_to_base64(hex_string) == base64_string { 
+        print!("It works! Succesfully ...");
     } else { 
-        print!("Oops! Not quite there yet – think through it ...")
-    };
-
+        print!("Oops! Not quite there yet – think through it ...");
+    }
 }
 
 
