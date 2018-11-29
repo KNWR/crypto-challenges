@@ -1,5 +1,3 @@
-I wouldn't use these solutions as references or anything.
-
 Developing a facility with cryptography;
 playing in rust; 
 maybe acquiring fluency in ruby.
